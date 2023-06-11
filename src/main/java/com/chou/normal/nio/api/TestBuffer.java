@@ -49,6 +49,7 @@ public class TestBuffer {
     private static void m1() {
         ByteBuffer byteBuffer = ByteBuffer.allocate(10);
         byteBuffer.put("hello nio".getBytes());
+
         byteBuffer.flip();
         ByteBufferUtil.debugAll(byteBuffer);
     }
