@@ -11,7 +11,7 @@ import java.nio.channels.SocketChannel;
  * @Date 2023/6/11 20:41
  * @Version 1.0
  **/
-public class Client {
+public class UnBlockClient {
     public static void main(String[] args) throws IOException {
         SocketChannel sc = SocketChannel.open();
         sc.connect(new InetSocketAddress("127.0.0.1",8080));
