@@ -55,9 +55,12 @@ public class IoMuPlexServer {
                 if (key.isAcceptable()) {
                     // 如果是 accept 接受事件
                     ServerSocketChannel channel = (ServerSocketChannel) key.channel();
+                    // 接收连接的socketChannel
                     SocketChannel sc = channel.accept();
                     sc.configureBlocking(false);
+                    // 将接收的socket通道注册到selector中
                     SelectionKey scKey = sc.register(selector, 0, null);
+                    // 并设置为可读事件
                     scKey.interestOps(SelectionKey.OP_READ);
                     log.debug("{}", sc);
                 } else if (key.isReadable()) {
