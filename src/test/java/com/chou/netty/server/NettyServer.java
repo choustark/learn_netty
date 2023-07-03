@@ -1,4 +1,4 @@
-package com.chou.server;
+package com.chou.netty.server;
 
 import com.sun.corba.se.spi.activation.Server;
 import io.netty.bootstrap.ServerBootstrap;
@@ -9,6 +9,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
+import io.netty.util.NettyRuntime;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 
@@ -21,7 +22,7 @@ import io.netty.util.concurrent.GenericFutureListener;
  **/
 public class NettyServer {
     public static void main(String[] args) {
-        ServerBootstrap bootstrap = new ServerBootstrap();
+        /*ServerBootstrap bootstrap = new ServerBootstrap();
 
         NioEventLoopGroup boss = new NioEventLoopGroup();
         NioEventLoopGroup work = new NioEventLoopGroup();
@@ -41,7 +42,8 @@ public class NettyServer {
                         });
                     }
                 });
-        bind(bootstrap,8000);
+        bind(bootstrap,8000);*/
+        System.out.println(NettyRuntime.availableProcessors());
     }
 
     private static void bind(final ServerBootstrap serverBootstrap, final int port) {
