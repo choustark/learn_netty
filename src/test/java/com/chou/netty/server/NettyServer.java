@@ -3,6 +3,7 @@ package com.chou.netty.server;
 import com.sun.corba.se.spi.activation.Server;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -22,40 +23,31 @@ import io.netty.util.concurrent.GenericFutureListener;
  **/
 public class NettyServer {
     public static void main(String[] args) {
-        /*ServerBootstrap bootstrap = new ServerBootstrap();
-
-        NioEventLoopGroup boss = new NioEventLoopGroup();
-        NioEventLoopGroup work = new NioEventLoopGroup();
-        bootstrap
-                .group(boss, work)
+        // 服务器端启动器
+        new ServerBootstrap()
+                // group 组
+                .group(new NioEventLoopGroup())
+                // 选择服务器的serverSocketChannel的实现
                 .channel(NioServerSocketChannel.class)
-                .childHandler(new ChannelInitializer<NioSocketChannel>() {
-                    @Override
-                    protected void initChannel(NioSocketChannel nsc) throws Exception {
-                        nsc.pipeline().addLast(new StringDecoder());
-                        nsc.pipeline().addLast(new SimpleChannelInboundHandler<String>() {
-
+                // 负责group中的处理连接，对连接给出相应的handler
+                .childHandler(
+                        // channel 代表和客户端进行数据读写的通道初始化。负责添加别的handle
+                        new ChannelInitializer<NioSocketChannel>() {
+                            // 添加具体的handler
                             @Override
-                            protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-                                System.out.println(msg);
-                            }
-                        });
-                    }
-                });
-        bind(bootstrap,8000);*/
-        System.out.println(NettyRuntime.availableProcessors());
-    }
+                            protected void initChannel(NioSocketChannel nsc) throws Exception {
+                                nsc.pipeline().addLast(new StringDecoder()); // 将bytebuffer 转字符串
+                                nsc.pipeline().addLast(new ChannelInboundHandlerAdapter() { // 自定义的handler
+                                    // 读事件
+                                    @Override
+                                    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+                                        //打印转换好的字符串
+                                        System.out.println(msg);
+                                    }
+                                });
 
-    private static void bind(final ServerBootstrap serverBootstrap, final int port) {
-        serverBootstrap.bind(port).addListener(new GenericFutureListener<Future<? super Void>>() {
-            public void operationComplete(Future<? super Void> future) {
-                if (future.isSuccess()) {
-                    System.out.println("端口[" + port + "]绑定成功!");
-                } else {
-                    System.err.println("端口[" + port + "]绑定失败!");
-                    bind(serverBootstrap, port + 1);
-                }
-            }
-        });
+                            }
+                            // 绑定端口号
+                        }).bind(8000);
     }
 }

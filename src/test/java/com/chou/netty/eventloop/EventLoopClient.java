@@ -1,18 +1,15 @@
-package com.chou.netty.client;
+package com.chou.netty.eventloop;
 
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @Author Chou
@@ -21,10 +18,10 @@ import java.util.concurrent.TimeUnit;
  * @Date 2023/5/29 20:35
  * @Version 1.0
  **/
-public class NettyClient {
-    public static void main(String[] args) throws InterruptedException {
+public class EventLoopClient {
+    public static void main(String[] args) throws InterruptedException, IOException {
         // 启动器
-        new Bootstrap()
+        Channel channel = new Bootstrap()
                 // 添加eventLoop
                 .group(new NioEventLoopGroup())
                 // 选择客户端channel 的是吸纳
@@ -40,8 +37,9 @@ public class NettyClient {
                 // 连接到服务器
                 .connect(new InetSocketAddress("localhost", 8000))
                 .sync()
-                .channel()
-                // 向服务器发送数据
-                .writeAndFlush("hello world");
+                .channel();
+        channel.writeAndFlush("ok");
+        System.in.read();
+
     }
 }
