@@ -38,7 +38,7 @@ public class EventLoopClient {
                 .connect(new InetSocketAddress("localhost", 8000))
                 .sync()
                 .channel();
-        channel.writeAndFlush("ok");
+        System.out.println(channel);
         System.in.read();
 
     }
