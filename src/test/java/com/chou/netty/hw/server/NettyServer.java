@@ -1,4 +1,4 @@
-package com.chou.netty.server;
+package com.chou.netty.hw.server;
 
 import com.sun.corba.se.spi.activation.Server;
 import io.netty.bootstrap.ServerBootstrap;

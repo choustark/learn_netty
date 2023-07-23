@@ -23,7 +23,7 @@
         </encoder>
     </appender>-->
 
-    <!-- 用来控制查看那个类的日志内容（对mybatis name 代表命名空间） -->
+    <!-- 用来控制查看那个类的日志内容-->
     <logger name="com.chou" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>

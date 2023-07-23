@@ -1,4 +1,4 @@
-package com.chou.netty.client;
+package com.chou.netty.hw.client;
 
 
 import io.netty.bootstrap.Bootstrap;

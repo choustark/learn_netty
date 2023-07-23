@@ -39,7 +39,7 @@ public class EventLoopServer {
                             @Override
                             public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
                                 ByteBuf buf = msg instanceof ByteBuf ? (ByteBuf) msg :null;
-                                log.debug("-----{}", buf.toString(Charset.defaultCharset()));
+                                log.info("-----{}", buf.toString(Charset.defaultCharset()));
                                 ctx.fireChannelRead(msg);
                             }
                             // 添加第二个处理器，区分了group 分组，交给不同的group中的线程处理
@@ -47,13 +47,12 @@ public class EventLoopServer {
                             @Override
                             public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
                                 ByteBuf buf = msg instanceof ByteBuf ? (ByteBuf) msg :null;
-                                log.debug("-----{}", buf.toString(Charset.defaultCharset()));
+                                log.info("-----{}", buf.toString(Charset.defaultCharset()));
                             }
                         });
 
                     }
                 })
                 .bind(8000);
-
     }
 }
