@@ -23,7 +23,6 @@ import java.nio.charset.Charset;
 @Slf4j
 public class ChannelServer {
     public static void main(String[] args) {
-        log.info("server begin start .... ");
         new ServerBootstrap()
                 .group(new NioEventLoopGroup())
                 .channel(NioServerSocketChannel.class)
@@ -31,17 +30,16 @@ public class ChannelServer {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         //ch.pipeline().addLast(new StringDecoder());
-                        ch.pipeline().addLast(new ChannelInboundHandlerAdapter(){
+                        ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
 
                             @Override
                             public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-                                ByteBuf buf = msg instanceof ByteBuf ? (ByteBuf) msg :null;
+                                ByteBuf buf = msg instanceof ByteBuf ? (ByteBuf) msg : null;
                                 log.info("-----{}", buf.toString(Charset.defaultCharset()));
                             }
                         });
                     }
                 })
                 .bind(8000);
-        log.info("server start end ....");
     }
 }
